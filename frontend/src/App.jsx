@@ -22,40 +22,27 @@ export default function App() {
       .finally(() => setCarregando(false));
   }, []);
 
-  const sair = () => { localStorage.removeItem('token'); setUsuario(null); setAba('acervo'); setErro(''); };
+  const sair = () => { localStorage.removeItem('token'); setUsuario(null); setAba('acervo'); };
 
-  if (carregando) return <p className="carregando">Carregando...</p>;
+  if (carregando) return <p>Carregando...</p>;
   if (!usuario) return <Autenticacao aoEntrar={setUsuario} />;
 
-  const admin = usuario.papel === 'admin';
-  const abas = [['acervo', 'Acervo'], ['emprestimos', 'Empréstimos'], ...(admin ? [['usuarios', 'Usuários']] : [])];
+  const abas = [['acervo', 'Acervo'], ['emprestimos', 'Empréstimos'], ...(usuario.papel === 'admin' ? [['usuarios', 'Usuários']] : [])];
   return (
-    <div className="app">
-      <header className="cabecalho">
-        <div className="marca">
-          <h1>Biblioteca UNIFOR</h1>
-          <small>Sistema de Controle de Biblioteca</small>
-        </div>
-        <div className="sessao">
-          <div>
-            <strong>{usuario.nome}</strong>
-            <small>{admin ? 'Bibliotecário' : 'Leitor'}</small>
-          </div>
-          <button onClick={sair}>Sair</button>
-        </div>
-      </header>
+    <>
+      <div className="topo">
+        <h1>Biblioteca UNIFOR</h1>
+        <span>{usuario.nome} ({usuario.papel === 'admin' ? 'bibliotecário' : 'leitor'}) <button onClick={sair}>Sair</button></span>
+      </div>
       <nav className="abas">
         {abas.map(([id, nome]) => (
           <button key={id} className={aba === id ? 'ativa' : ''} onClick={() => { setErro(''); setAba(id); }}>{nome}</button>
         ))}
       </nav>
-      <main className="conteudo">
-        {erro && <p className="erro">{erro}</p>}
-        {aba === 'acervo' && <Livros key={versao} usuario={usuario} aoErro={setErro} aoMudar={mudou} />}
-        {aba === 'emprestimos' && <Emprestimos usuario={usuario} aoErro={setErro} versao={versao} aoMudar={mudou} />}
-        {aba === 'usuarios' && admin && <Usuarios eu={usuario} aoErro={setErro} />}
-      </main>
-      <footer className="rodape"><span>Biblioteca UNIFOR</span></footer>
-    </div>
+      {erro && <p className="erro">{erro}</p>}
+      {aba === 'acervo' && <Livros key={versao} usuario={usuario} aoErro={setErro} aoMudar={mudou} />}
+      {aba === 'emprestimos' && <Emprestimos usuario={usuario} aoErro={setErro} versao={versao} aoMudar={mudou} />}
+      {aba === 'usuarios' && usuario.papel === 'admin' && <Usuarios eu={usuario} aoErro={setErro} />}
+    </>
   );
 }
