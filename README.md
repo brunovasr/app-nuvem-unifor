@@ -60,6 +60,21 @@ Variáveis de ambiente: `PORT`, `JWT_SECRET` (obrigatório em produção) e `DB_
 
 > **Implantação:** o frontend roda no Azure Static Web Apps e a API no Render (veja a seção "Publicação na nuvem" acima). Localmente, `npm start` serve API e frontend juntos.
 
+## Telas do sistema
+
+| | |
+|---|---|
+| ![Login](docs/telas/01-login.png) | ![Cadastro](docs/telas/02-cadastro.png) |
+| ![Acervo do leitor](docs/telas/03-acervo-leitor.png) | ![Empréstimos do leitor](docs/telas/04-emprestimos-leitor.png) |
+| ![Acervo do bibliotecário](docs/telas/05-acervo-admin.png) | ![Empréstimos do bibliotecário](docs/telas/06-emprestimos-admin.png) |
+| ![Usuários](docs/telas/07-usuarios-admin.png) | ![Regra de exclusão](docs/telas/08-erro-exclusao.png) |
+| ![API no ar no Render](docs/telas/09-api-render-live.png) | ![Sistema online no Azure](docs/telas/10-sistema-online-azure.png) |
+
+## Entrega
+
+- Relatório em PDF: [`docs/entrega/Trabalho-Biblioteca-Bruno-Rocha-2612659.pdf`](docs/entrega/Trabalho-Biblioteca-Bruno-Rocha-2612659.pdf)
+- Saída dos testes e das chamadas à API: [`docs/entrega/evidencias.txt`](docs/entrega/evidencias.txt)
+
 ## Estrutura do repositório
 
 - `backend/` — API Node/Express, banco SQLite e testes (`backend/test/`)
