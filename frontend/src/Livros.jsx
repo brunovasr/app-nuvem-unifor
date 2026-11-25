@@ -26,37 +26,68 @@ export default function Livros({ usuario, aoErro, aoMudar }) {
   const emprestar = (l) => executar(async () => { await chamar('POST', '/api/emprestimos', { livro_id: l.id }); await carregar(); aoMudar(); });
 
   return (
-    <>
-      <h2>Acervo</h2>
-      <form onSubmit={(e) => { e.preventDefault(); carregar(); }}>
-        <input placeholder="Buscar por título ou autor" value={busca} onChange={(e) => setBusca(e.target.value)} />
-        <button>Buscar</button>
-      </form>
-      <ul>
-        {livros.map((l) => (
-          <li key={l.id}>
-            <span>{l.titulo} <small>— {l.autor} · {l.exemplares_disponiveis}/{l.exemplares_total} disponíveis</small></span>
-            <span className="acoes">
-              <button disabled={l.exemplares_disponiveis < 1} onClick={() => emprestar(l)}>Emprestar</button>
-              {admin && <><button onClick={() => editar(l)}>Editar</button><button onClick={() => excluir(l)}>Excluir</button></>}
-            </span>
-          </li>
-        ))}
-        {!livros.length && <li>Nenhum livro encontrado.</li>}
-      </ul>
+    <div className={`acervo ${admin ? '' : 'leitor'}`}>
+      <section>
+        <h2>Acervo</h2>
+        <p className="subtitulo">Explore e gerencie os livros da biblioteca.</p>
+
+        <form className="busca" onSubmit={(e) => { e.preventDefault(); carregar(); }}>
+          <input placeholder="Buscar por título ou autor" value={busca} onChange={(e) => setBusca(e.target.value)} />
+          <button className="primario">Buscar</button>
+        </form>
+        <p className="contagem">{livros.length} {livros.length === 1 ? 'livro no acervo' : 'livros no acervo'}</p>
+
+        <ul className="lista">
+          {livros.map((l) => (
+            <li className="cartao-livro" key={l.id}>
+              <div>
+                <strong>{l.titulo}</strong>
+                <span className="autor">{l.autor}{l.isbn ? ` · ISBN ${l.isbn}` : ''}</span>
+                <span className={`estoque ${l.exemplares_disponiveis < 1 ? 'esgotado' : ''}`}>
+                  {l.exemplares_disponiveis}/{l.exemplares_total} disponíveis
+                </span>
+              </div>
+              <div className="acoes">
+                <button className="primario" disabled={l.exemplares_disponiveis < 1} onClick={() => emprestar(l)}>Emprestar</button>
+                {admin && <>
+                  <button onClick={() => editar(l)}>Editar</button>
+                  <button className="perigo" onClick={() => excluir(l)}>Excluir</button>
+                </>}
+              </div>
+            </li>
+          ))}
+          {!livros.length && <li className="vazio">Nenhum livro encontrado.</li>}
+        </ul>
+      </section>
+
       {admin && (
-        <>
-          <h2>{editando ? 'Editar livro' : 'Cadastrar livro'}</h2>
+        <aside className="painel">
+          <h3>{editando ? 'Editar livro' : 'Cadastrar livro'}</h3>
+          <p className="subtitulo">{editando ? 'Altere os dados do livro selecionado.' : 'Amplie o acervo da biblioteca.'}</p>
           <form onSubmit={salvar}>
-            <input placeholder="Título" value={form.titulo} onChange={mudar('titulo')} required />
-            <input placeholder="Autor" value={form.autor} onChange={mudar('autor')} required />
-            <input placeholder="ISBN" value={form.isbn} onChange={mudar('isbn')} />
-            <input type="number" min="0" title="Exemplares" value={form.exemplares_total} onChange={mudar('exemplares_total')} required />
-            <button>{editando ? 'Salvar' : 'Cadastrar'}</button>
-            {editando && <button type="button" onClick={() => { setEditando(null); setForm(vazio); }}>Cancelar</button>}
+            <div className="campo">
+              <label htmlFor="titulo">Título</label>
+              <input id="titulo" placeholder="Ex.: O Cortiço" value={form.titulo} onChange={mudar('titulo')} required />
+            </div>
+            <div className="campo">
+              <label htmlFor="autor">Autor</label>
+              <input id="autor" placeholder="Nome do autor" value={form.autor} onChange={mudar('autor')} required />
+            </div>
+            <div className="campo duas">
+              <div>
+                <label htmlFor="isbn">ISBN</label>
+                <input id="isbn" placeholder="Opcional" value={form.isbn} onChange={mudar('isbn')} />
+              </div>
+              <div>
+                <label htmlFor="exemplares">Exemplares</label>
+                <input id="exemplares" type="number" min="0" value={form.exemplares_total} onChange={mudar('exemplares_total')} required />
+              </div>
+            </div>
+            <button className="primario">{editando ? 'Salvar alterações' : 'Cadastrar livro'}</button>
+            {editando && <button type="button" className="cancelar" onClick={() => { setEditando(null); setForm(vazio); }}>Cancelar</button>}
           </form>
-        </>
+        </aside>
       )}
-    </>
+    </div>
   );
 }

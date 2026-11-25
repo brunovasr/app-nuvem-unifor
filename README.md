@@ -6,6 +6,82 @@
 
 Sistema web de controle de biblioteca: acervo, empréstimos, renovações, devoluções com multa por atraso e administração de usuários. Frontend em React, backend REST em Node.js/Express, banco SQLite, autenticação JWT e testes automatizados.
 
+## Atividade: ambientes de desenvolvimento de software
+
+Cada ambiente abaixo foi usado no desenvolvimento deste projeto, com o print que comprova.
+
+### 1. Ambiente de gestão — Trello
+
+Quadro **"Gestão do projeto Biblioteca UNIFOR"** com as listas Backlog, Em desenvolvimento, Em testes e Concluído.
+
+![Quadro no Trello](docs/ambientes/01-trello-quadro-gestao.jpg)
+
+### 2. Ambiente de design de interfaces (UI/UX) — Figma
+
+Protótipo das quatro telas do sistema (Login, Acervo, Empréstimos e Usuários), em quadros de 1100 × 700 px.
+
+![Telas do protótipo no Figma](docs/ambientes/02-figma-telas-prototipo.jpg)
+
+![Tela de Acervo no Figma](docs/ambientes/02-figma-tela-acervo.jpg)
+
+#### Interface do Figma implementada no sistema
+
+O protótipo foi implementado no frontend React (login em painel dividido, cabeçalho com abas, cartões do acervo, tabelas de empréstimos e usuários), mantendo as regras de negócio e a API. Telas do sistema em execução:
+
+![Login](docs/telas/interface/01-login.png)
+
+![Acervo (bibliotecário)](docs/telas/interface/02-acervo-bibliotecario.png)
+
+![Acervo (leitor)](docs/telas/interface/04-acervo-leitor.png)
+
+![Empréstimos (leitor)](docs/telas/interface/05-emprestimos-leitor.png)
+
+![Usuários](docs/telas/interface/03-usuarios.png)
+
+### 3. Ambiente de desenvolvimento — Visual Studio Code
+
+Projeto aberto no VS Code, com `backend/`, `frontend/` e `docs/` no Explorador e o Git na barra inferior.
+
+![Projeto aberto no VS Code](docs/ambientes/03-vscode-projeto-aberto.png)
+
+### 4. Ambiente de gestão de banco de dados — SQLite (sqlite-web)
+
+Banco `biblioteca.sqlite` aberto em um cliente de banco de dados: tabelas, conteúdo de `livros` e estrutura de `usuarios`.
+
+![Tabelas do banco](docs/ambientes/04-sqlite-web-tabelas.png)
+
+![Conteúdo da tabela livros](docs/ambientes/04-sqlite-web-livros.png)
+
+![Estrutura da tabela usuarios](docs/ambientes/04-sqlite-web-estrutura-usuarios.png)
+
+### 5. Ambiente de testes — node:test e Selenium
+
+Testes formais da API (19 aprovados) e teste de interface com Selenium (`e2e/teste_selenium.py`: login, acervo, empréstimo e listagem).
+
+![Testes formais no terminal](docs/ambientes/05-testes-formais-terminal.png)
+
+![Saída do teste Selenium](docs/ambientes/05-selenium-terminal.png)
+
+![Selenium — login](docs/ambientes/selenium/01-login.png)
+
+![Selenium — acervo](docs/ambientes/selenium/02-acervo.png)
+
+![Selenium — empréstimo realizado](docs/ambientes/selenium/03-emprestimo-realizado.png)
+
+![Selenium — aba de empréstimos](docs/ambientes/selenium/04-emprestimos.png)
+
+### 6. Ambiente de execução e servidores web — Node.js/Express, Render e Azure
+
+Servidor local (`npm start`), API REST no Render e frontend no Azure Static Web Apps.
+
+![Aplicação local — login](docs/ambientes/06-app-local-login.png)
+
+![Aplicação local — acervo](docs/ambientes/06-app-local-acervo.png)
+
+![API no Render](docs/telas/09-api-render-live.png)
+
+![Sistema online no Azure](docs/telas/10-sistema-online-azure.png)
+
 ## Requisitos atendidos
 
 Sistema escolhido: **Controle de Biblioteca** (acervo, empréstimos, devoluções com multa e administração de usuários). Equipe individual (1 pessoa) → mínimo de 6 transações; o sistema possui **10**.
@@ -82,6 +158,7 @@ Variáveis de ambiente: `PORT`, `JWT_SECRET` (obrigatório em produção) e `DB_
 - `.github/workflows/` — fluxo de implantação do Azure Static Web Apps
 - `docs/telas/` — prints do sistema; `docs/entrega/` — PDF e evidências
 - `docs/img/` — prints da publicação na nuvem (atividade anterior)
+- `docs/ambientes/` — evidências da atividade de ambientes de desenvolvimento (Trello, banco, testes, execução); `e2e/` — teste de interface com Selenium
 
 ## Publicação na nuvem (sistema completo online)
 
